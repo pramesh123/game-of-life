@@ -24,7 +24,7 @@ pipeline {
                 stash name: 'warfile', includes: 'gameoflife-web/target/*.war'
             }
         }
-        stage ('copy files to other node') {
+        stage('copy files to other node') {
             agent { label 'ltelog'}
             steps {
                 unstash name: 'warfile'
