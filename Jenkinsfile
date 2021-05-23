@@ -1,7 +1,7 @@
 pipeline {
     agent { label 'ltecomm'}
     triggers {
-        cron ('* * * * *')
+        cron (' * * * *')
     }
     parameters {
         string (name: 'MAVEN_GOAL', defaultValue: 'package', description: 'parameter checking')
