@@ -4,7 +4,7 @@ pipeline {
         cron ('* * * * *')
     }
     parameters {
-        string (name: 'MAVEN_GOAL', defaultvalue: 'package', description: 'parameter checking')
+        string (name: 'MAVEN_GOAL', defaultValuex`: 'package', description: 'parameter checking')
     }
     stages {
         stage('scm') {
