@@ -1,20 +1,23 @@
 pipeline {
     agent { label 'ltecomm'}
     triggers {
-        cron ('H * * * 1-5')
+        cron('H * * * 1-5')
     }
     parameters {
-        string (name: 'MAVEN_GOAL', defaultValue: 'package', description: 'parameter checking')
+        string(name: 'MAVENGOAL', defaultValue: 'clean package', description: 'Enter your maven goal')
+    }
+    options {
+        timeout(time: 30, unit: 'MINUTES')
     }
     stages {
         stage('scm') {
             steps {
-                git 'https://github.com/pramesh123/game-of-life.git'
+                git 'https://github.com/wakaleo/game-of-life.git'        
             }
         }
         stage('build') {
             steps {
-                sh script: "mvn ${param.MAVEN_GOAL}"
+                sh script: "mvn ${params.MAVENGOAL}"
             }
         }
         stage('post build') {
@@ -24,13 +27,12 @@ pipeline {
                 stash name: 'warfile', includes: 'gameoflife-web/target/*.war'
             }
         }
-        stage('copy files to other node') {
-            agent { label 'ltelog'}
+        stage ('copy to other node') {
+            agent { label 'ltelog' }
             steps {
                 unstash name: 'warfile'
             }
         }
-
     }
     post {
         always {
