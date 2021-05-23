@@ -1,6 +1,6 @@
 pipeline {
     agent { label 'ltecomm'}
-    trigger {
+    triggers {
         cron ('* * * * *')
     }
     parameters {
@@ -8,12 +8,12 @@ pipeline {
     }
     stages {
         stage('scm') {
-            step {
+            steps {
                 git 'https://github.com/pramesh123/game-of-life.git'
             }
         }
         stage('build') {
-            step {
+            steps {
                 sh script: mvn "${param.MAVEN_GOAL}"
             }
         }
